@@ -2,9 +2,7 @@
   Chris Buckett
 */
 
-$(document).ready(function() {   
 
-});
 
 var LOCAL_STORAGE_PREFIX = "eventington.cache.";
 var SERVER_GEOCODE_URL = "geocode";
@@ -394,12 +392,13 @@ var doSearch = function(location) {
   cachedGeocodeLookup(location, callbackFunction);
 };
 
+
 /*
 * Function to geocode a location into a lat lng and a name, for adding a location to the server.
 *
 *
 */
-var doGeocode = function(location) {
+var saveEvent = function(location, event ) {
     
   /* 
   * Callback function(data) { data.latitude, data.longitude }
@@ -410,7 +409,9 @@ var doGeocode = function(location) {
       var event = {
         "lat" : data.latitude,
         "lng" : data.longitude,
-        "name" : location
+        "name" : location,
+        "event" : eventType
+        
       }
         
       $.post(SERVER_EVENT_URL, event);      
@@ -423,3 +424,37 @@ var doGeocode = function(location) {
   cachedGeocodeLookup(location, callbackFunction);
 };
 
+
+var getBrowserLocation = function() {
+  console.log($('#locateMe').length);
+  
+  if ($("#locateMe").length) {
+    if (Modernizr.geolocation) {
+      console.log("has geolocation");
+      
+      var showMap = function(position) {
+        console.log("showin map from geolocation");
+        console.log(position);
+        loadMap(position.coords.latitude, position.coords.longitude);
+      };
+      
+      var options = {
+        maximumAge: 120000,
+        enableHighAccuracy: false
+      };
+      
+      //getCurrentPosition(success, error, options)
+      navigator.geolocation.getCurrentPosition(showMap, function() {}, options);
+      
+    }
+  }
+};
+
+
+
+
+
+$(document).ready(function() {   
+  console.log("script ready");
+  getBrowserLocation();
+});

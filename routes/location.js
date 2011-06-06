@@ -44,7 +44,8 @@ module.exports = function(app) {
         long : parseFloat(req.body.lng),
         lat: parseFloat(req.body.lat)
       },
-      name: req.body.name
+      name: req.body.name,
+      event: req.body.event
     };
     
     console.log(event);

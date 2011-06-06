@@ -14,5 +14,6 @@
 
 <br />
 Or geocode lookup:
-<input id="location" type="text" />
-<input type="button" value="Add" onclick="doGeocode($('#location').val());"/>
+Location: <input id="location" type="text" /><br/>
+Event: <input id="event" type="text" /><br />
+<input type="button" value="Add" onclick="doGeocode($('#location').val(), $('#event').val());"/>
