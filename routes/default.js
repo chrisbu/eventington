@@ -3,8 +3,8 @@
 module.exports = function(app) {
   
   var index = function(req, res) {
-        res.render('index', {
-        title: 'Map'
+    res.render('index', {
+      title: 'Map'
     });
   };
   
