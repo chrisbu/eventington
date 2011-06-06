@@ -9,6 +9,7 @@ $(document).ready(function() {
 var LOCAL_STORAGE_PREFIX = "eventington.cache.";
 var SERVER_GEOCODE_URL = "geocode";
 var SERVER_GEOCODE_URL_SEARCH = SERVER_GEOCODE_URL + "?l=";
+var SERVER_EVENT_URL = "location";
 
 
 var api_key_192_168_2_52_3005 = "ABQIAAAAxkDTksyhjiJTpVwyvJzXKRSTmNclSbpvz4vzw1ViJAIBBWYLKBSbuK433SpQXtEiZU4fO7wvJtEgMA";
@@ -375,9 +376,7 @@ var searchforEvents = function(lat, lng, date, callbackFunction) {
 * On successful geocode, it will load the google map, and position a marker on the center.
 * Once the map is loaded, it will callback to the server to load some search data.
 */
-var doSearch = function() {
-  //var g = new CachedGeocode(api_key_192_168_2_52_3005);  
-  var location = $('#location').val();  
+var doSearch = function(location) {
   
   /* 
   * Callback function(data) { data.latitude, data.longitude }
@@ -391,8 +390,36 @@ var doSearch = function() {
     }
   };
   
-  //perform the geocode lookup.
-  //g.geocode(address, callbackFunction);  
+  //perform the geocode lookup.  
+  cachedGeocodeLookup(location, callbackFunction);
+};
+
+/*
+* Function to geocode a location into a lat lng and a name, for adding a location to the server.
+*
+*
+*/
+var doGeocode = function(location) {
+    
+  /* 
+  * Callback function(data) { data.latitude, data.longitude }
+  */
+  var callbackFunction = function(data) {
+    if(data !== null) {  
+      console.log("geocode ok");
+      var event = {
+        "lat" : data.latitude,
+        "lng" : data.longitude,
+        "name" : location
+      }
+        
+      $.post(SERVER_EVENT_URL, event);      
+    } else {  
+      alert('ERROR! Unable to geocode address');  
+    }
+  };
+  
+  //perform the geocode lookup.  
   cachedGeocodeLookup(location, callbackFunction);
 };
 
