@@ -5,7 +5,7 @@
 <table>
       <tr><td>Lat:</td><td><input type="text" name="lat"></td></tr>
       <tr><td>Lng:</td><td><input type="text" name="lng"></td></tr>
-      <tr><td>Name:</td><td><input type="text" name="name"></td></tr>
+      <tr><td>Name:</td><td><input type="text"  id="name"></td></tr>
       <tr><td></td><td><input type="submit" name="submit" value="Submit"></td></tr>
 </table>
 
@@ -16,4 +16,6 @@
 Or geocode lookup:
 Location: <input id="location" type="text" /><br/>
 Event: <input id="event" type="text" /><br />
-<input type="button" value="Add" onclick="doGeocode($('#location').val(), $('#event').val());"/>
+Date: <input type="text" name="date" id="date" /><br />
+<input type="button" value="Add" onclick="saveEvent($('#location').val(), $('#event').val(), $('#date').val());"/>
+

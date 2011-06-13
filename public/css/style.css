@@ -201,6 +201,91 @@ button {  width: auto; overflow: visible; }
     Author: 
  */
 
+header {
+    height: 110px;    
+    margin-bottom: 10px;
+}
+
+
+#results {
+  float: left;
+  width: 30%;
+  height:150px;
+  background-color: #999
+  margin-bottom: 10px;
+  
+}
+
+#map_canvas {
+  display: block;
+  float: left;
+  width: 70%;
+  height: 350px;  
+}
+
+#navlist {
+  background-color: #CFE2F3;
+  height: 20px;
+  text-align: right;
+}
+
+#navlist li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+  color: black;
+}
+
+#navlist a {
+  color: black;
+}
+
+
+
+#parallax-logo {
+ display:block;
+ width: 200px;
+ height: 80px;
+ margin: 0px 0 0 0px;
+ /*padding-right: 100px;*/
+ top: 0px;
+ left: 0px;
+ position: absolute;
+ overflow: hidden;
+}
+
+
+#parallax-logo img#logo-back {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 5px;
+}
+
+#parallax-logo img#logo-tag {
+  position: absolute;
+  z-index: 3;
+  top: 60px;
+  /*left: 75px;*/
+  left: 15px;
+}
+
+
+#parallax-logo img#logo-sun {
+  position: absolute;
+  z-index: 4;
+  top: 20px;
+  left: 12px;
+}
+
+#parallax-logo img#logo-text {
+  position: absolute;
+  z-index: 5;
+  top: 30px;
+  /*left: 70px;  */
+  left: 10px;
+}
+
 
 
 

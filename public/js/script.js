@@ -398,7 +398,7 @@ var doSearch = function(location) {
 *
 *
 */
-var saveEvent = function(location, event ) {
+var saveEvent = function(location, eventName, date) {
     
   /* 
   * Callback function(data) { data.latitude, data.longitude }
@@ -410,10 +410,11 @@ var saveEvent = function(location, event ) {
         "lat" : data.latitude,
         "lng" : data.longitude,
         "name" : location,
-        "event" : eventType
-        
+        "event" : eventName,
+        "date" : date        
       }
         
+      log(event);
       $.post(SERVER_EVENT_URL, event);      
     } else {  
       alert('ERROR! Unable to geocode address');  
@@ -451,10 +452,20 @@ var getBrowserLocation = function() {
 };
 
 
-
-
-
 $(document).ready(function() {   
   console.log("script ready");
   getBrowserLocation();
+  
+  if ($('#date')) {
+    log("datepicker");
+    $('#date').datepicker({ dateFormat: 'yy/mm/dd' });
+  }
+  
+  $('#logo-text').plaxify({"xRange":10,"yRange":7});
+  $('#logo-tag').plaxify({"xRange":4,"yRange":4,"invert":false});
+  /*$('#logo-sun').plaxify({"xRange":7,"yRange":5,"invert":true});
+  $('#logo-back').plaxify({"xRange":3,"yRange":3,"invert":true});*/
+  $.plax.enable();
+  
+  
 });
