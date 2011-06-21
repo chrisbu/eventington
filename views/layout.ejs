@@ -34,7 +34,7 @@
   <!-- For the less-enabled mobile browsers like Opera Mini -->
   <link rel="stylesheet" media="handheld" href="css/handheld.css?v=1">
 
-  <link type="text/css" href="css/sunny/jquery-ui-1.8.13.custom.css" rel="stylesheet" />  
+  <link type="text/css" href="css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />  
  
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
   <script src="js/modernizr-1.5.min.js"></script>
@@ -53,21 +53,14 @@
 
   <div id="container">
     <header>
-      <div id="navlist">
+      <!--<div id="navlist">
           <ul>
             <li><a href="/location">Add Event</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">Register</a> / <a href="#">Logon</a></li>            
           </ul>
-      </div>
-      <div id="parallax-logo">
-        <img src="images/logo-text.png" id="logo-text" />        
-        <img src="images/logo-tag.png" id="logo-tag" />
-        <!--<img src="images/logo-sun.png" id="logo-sun" />-->
-        <!--<img src="images/logo-back.png" id="logo-back" />-->
-        
-      </div>
+      </div>-->
     </header>
 
 
@@ -95,9 +88,12 @@
   <script>!window.jQuery && document.write('<script src="js/jquery-1.5.1.min.js"><\/script>')</script>
   <script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>
 
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+
 
   <script src="js/plugins.js?v=1"></script>
   <script src="js/script.js?v=1"></script>
+<script src="js/geocode.js?v=1"></script>
 
   <!--[if lt IE 7 ]>
     <script src="js/dd_belatedpng.js?v=1"></script>
@@ -110,6 +106,7 @@
   <!-- end profiling code -->
 
 
+  <script type="text/javascript" src="/js/jquery.labelify.js"></script>
   <script type="text/javascript" src="/js/plax.js"></script>
 
 

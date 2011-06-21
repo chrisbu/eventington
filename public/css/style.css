@@ -198,15 +198,58 @@ button {  width: auto; overflow: visible; }
 
 
  /* Primary Styles
-    Author: 
+    Author: Chris Buckett
  */
 
-header {
+
+/*header {
     height: 110px;    
     margin-bottom: 10px;
+}*/
+
+#title {
+  font-size: 26px;
+  text-align: center;
+  color: blue;
 }
 
+#title #tag-line {
+  font-size: 14px;
+  color: blue;
+}
 
+.search {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search button {
+ font-size: 10px; 
+}
+
+.search #doSearch {
+  font-size: 20px;
+}
+
+#where {
+  float: left;
+  display: relative;
+  width: 49%;
+  text-align: right;  
+}
+
+#when {
+  float: right;
+  display: relative;
+  width: 49%;
+  text-align: left;  
+}
+
+#search {
+  text-align: center;
+}
+
+/*
 #results {
   float: left;
   width: 30%;
@@ -215,12 +258,18 @@ header {
   margin-bottom: 10px;
   
 }
+*/
+
+.results {
+  text-align: center;
+}
 
 #map_canvas {
   display: block;
-  float: left;
-  width: 70%;
+  
+  width: 95%;
   height: 350px;  
+  margin: 30px;
 }
 
 #navlist {

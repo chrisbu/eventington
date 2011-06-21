@@ -1,11 +1,62 @@
-<a href="\location">Add location</a><br />
+<script src="js/search.js?v=1"></script>
+
+<div id="title" style="visibility: hidden">
+  <div>
+    <span id="logo1">event</span><span id="logo2">ington</span>
+  </div>
+  <div id="tag-line">where + when = what</div>
+</div>
+
+
+<div class="search" />
+
+  <div id="where"/>
+    <button onclick="getBrowserLocation();">Determine my location</button>    
+    <input type="textbox" id="loc" title="Where" />
+  </div>
+
+
+  <div id="when" />
+    <input type="textbox" id="dat" title="When" />
+    <button>Today</button><button>Tomorrow</button>    
+  </div>
+
+  <div id="search" />
+    <script>
+      eventSearch = function() {
+        var location = $('#loc').val();
+        var date = $('#dat').val();
+
+        doSearch(location, date);
+      };
+    </script>
+
+    <button id="doSearch" onclick="eventSearch();">Search</button>
+  </div>
+
+</div>
+
+
+
+
+<div class="results">
+  <div id="map_canvas"></div>
+  <div id="results_list" ></div>
+</div>
+
+
+
+
+
+
+<!--
 <label for="location">Search around this location:</label>
 <input type="textbox" id="location" />
 <input type="button" id="searchButton" value="Search" onclick="doSearch($('#location').val());"/>
 <div id="results"></div>
 <div id="map_canvas">map goes here</div>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-
+-->
 
 <!-- include the locateMe div to use browser geolocation -->
-<div id="locateMe" />
+<!--<div id="locateMe" />-->

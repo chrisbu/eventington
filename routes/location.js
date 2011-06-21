@@ -7,16 +7,56 @@ module.exports = function(app) {
   *
   */  
   var locationLookup = function(req, res) {
-    //todo: lookup the location out of mongodb.
+    
+    //create the location filter.
     var lat =  parseFloat(req.param("lat"));
     var long = parseFloat(req.param("long"));
-    var location = [long, lat];
-    console.log(location);
     
-    app.events.find({"loc": {$near: location, $maxDistance: 1}}, function(err, cursor) {
+    var location = [long, lat];
+    console.log(location);    
+    var locationFilter = {$near: location, $maxDistance: 1};
+    
+    
+    //create the dateFilter.
+    var start = req.param("s"); //start date
+    var end = req.param("e"); //end date -- may not exist.
+ 
+ 
+ 
+    var dateFilter = {};
+    
+    if (end) { 
+      //there is an end date, so assume a range.
+      //var startDate = new Date("2011-06-15");
+      var startDate = new Date(start);
+      var endDate = new Date(end);
+      dateFilter = {$gte: startDate, $lt: endDate};
+    }
+    else {
+      //no end date, so assume a single date.
+      var startDate = new Date(start);
+      var endDate = new Date(start);
+      console.log(endDate);
+      dateFilter = {$gte: startDate, $lt: endDate};
+      console.log(dateFilter);
+    }
+    
+    
+    
+    
+    //create the final filter.
+    var filter = {
+      "loc": locationFilter,
+      "date": dateFilter
+    };
+    
+    
+    //perform the search.
+    app.events.find(filter, function(err, cursor) {
       if (err) { console.log(err);}
       
       cursor.toArray(function(err, items) {          
+        //callback when we get the items.  Just return them as json.
         console.log(items);
         res.send(items);            
       });
@@ -35,8 +75,7 @@ module.exports = function(app) {
   var addLocation = function(req, res) {
     //todo: add the location to mongodb collection.
     console.log("in AddLocation");
-    
-    
+   
     
     //create the event object
     var event = {
@@ -45,7 +84,8 @@ module.exports = function(app) {
         lat: parseFloat(req.body.lat)
       },
       name: req.body.name,
-      event: req.body.event
+      event: req.body.event,
+      date: new Date(req.body.date)
     };
     
     console.log(event);
