@@ -1,0 +1,23 @@
+{
+	"name": "Eventington",
+	"version": "0.1.0",
+	"description": "Website to create events and show what's happening, when and where",
+	"main": "app.js",
+	"author": {
+		"name": "Chris Buckett",
+		"email": "chrisbuckett@gmail.com",
+		"url": "http://www.chrisdoesdev.com"
+	},
+	"keywords": ["eventington", "events", "event"],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/chrisbu/eventington.git"
+	},
+	
+	"dependencies": {
+		"mongodb": ">=0.9.6",
+		"express": ">=2.3.11",
+		"ejs": ">=0.4.2"
+	}
+	
+}
