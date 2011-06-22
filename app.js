@@ -35,7 +35,6 @@ var db = new Db('eventington', new Server("127.0.0.1", 27017, {}), {native_parse
 // Routes
 
 require("./routes/default")(app);
-require("./routes/search")(app);
 require("./routes/location")(app);
 
 

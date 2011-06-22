@@ -31,5 +31,5 @@ Changelog
 7th June 2011
 *Version 0*
 Currently you can 
-1. add a location record
-2. search around a location to see location records that have been stored nearby.
+* 1. add an event record 
+* 2. search around a location to see event records that have been stored nearby on a specific date
