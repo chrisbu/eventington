@@ -120,7 +120,7 @@ var loadMap = function(lat,lng, date, shouldDoSearch) {
 
   
     //Callback to the server using ajax and load some data to create new markers.
-    searchforEvents(lat, lng, new Date(date), mapDataLoadedCallback);
+    searchforEvents(lat, lng, date, mapDataLoadedCallback);
   }
     
 };
@@ -162,6 +162,9 @@ var doSearch = function(location, date) {
 *
 */  
 var searchforEvents = function(lat, lng, startDate, callbackFunction) {
-  ajaxGet("/locations?lat=" + lat + "&long=" + lng + ", &s=" + startDate, "", callbackFunction);
+  log("startDate: ");
+  log(startDate);
+	
+  ajaxGet("/locations?lat=" + lat + "&lng=" + lng + ", &s=" + startDate, "", callbackFunction);
   
 };

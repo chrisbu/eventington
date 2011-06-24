@@ -63,7 +63,7 @@ var ajaxGet = function(serverUrl, dataType, callback) { //callback(resultData, f
 
 $(document).ready(function() {   
     $("input").labelify(); 
-    $("button, input:submit, a").button();
+    $("button, input:submit").button();
     $("#dat").datepicker({ dateFormat: 'yy-mm-dd' });
   
   

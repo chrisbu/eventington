@@ -233,20 +233,23 @@ button {  width: auto; overflow: visible; }
 
 #where {
   float: left;
-  display: relative;
   width: 49%;
   text-align: right;  
 }
 
 #when {
   float: right;
-  display: relative;
   width: 49%;
   text-align: left;  
 }
 
 #search {
   text-align: center;
+}
+
+#add-event {
+  text-align: center;
+  font-size: 12px;
 }
 
 /*

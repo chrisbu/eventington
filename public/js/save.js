@@ -12,6 +12,9 @@ var saveEvent = function(location, eventName, date) {
   var callbackFunction = function(data) {
     if(data !== null) {  
       console.log("geocode ok");
+      
+      date = date + " 00:00:00.000Z";
+      
       var event = {
         "lat" : data.latitude,
         "lng" : data.longitude,
