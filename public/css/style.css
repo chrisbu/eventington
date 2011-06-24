@@ -252,6 +252,15 @@ button {  width: auto; overflow: visible; }
   font-size: 12px;
 }
 
+#add-event-form {
+	text-align:center;
+	font-size: 12px;
+	display:none;
+	background:#ccddff; 
+	height:100px;
+	margin:3px;
+}
+
 /*
 #results {
   float: left;

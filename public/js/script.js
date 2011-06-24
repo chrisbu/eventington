@@ -80,10 +80,12 @@ $(document).ready(function() {
   console.log("script ready");
  // getBrowserLocation();
   
-  if ($('#date')) {
+  if ($('#addDate')) {
     log("datepicker");
-    $('#date').datepicker({ dateFormat: 'yy/mm/dd' });
+    $('#addDate').datepicker({ dateFormat: 'yy/mm/dd' });    
   }
+  
+  
   
   $('#logo-text').plaxify({"xRange":10,"yRange":7});
   $('#logo-tag').plaxify({"xRange":4,"yRange":4,"invert":false});
