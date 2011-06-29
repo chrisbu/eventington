@@ -5,7 +5,7 @@ module.exports = function(app) {
   var index = function(req, res) {
     res.render('index', {
       title: 'Map'
-    });
+    });   	
   };
   
   app.get('/', index);

@@ -17,7 +17,8 @@
 	"dependencies": {
 		"mongodb": ">=0.9.6",
 		"express": ">=2.3.11",
-		"ejs": ">=0.4.2"
+		"ejs": ">=0.4.2",
+		"everyauth": ">=0.2.13"
 	},
 	
 	"engines": {"node": "0.4.8" }

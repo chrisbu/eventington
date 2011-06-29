@@ -1,4 +1,4 @@
-//Route for /loclook
+//Route for /
 
 module.exports = function(app) {
   
