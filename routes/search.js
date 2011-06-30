@@ -11,13 +11,13 @@
  * 
  */
 
-
+var util = require("util");
 
 
 module.exports = function(app) {
 
-  var pointModule = require("../model/point")(app);
-
+  var Point = require("../model/point").Point;
+  
   /*
    * GET: /search/event
    * 
@@ -40,24 +40,66 @@ module.exports = function(app) {
    * 		- this would search for events around a point, happening between the start of 26th June 2011, and the end of 26th June 2011
    */
   var searchEvent = function(req, res) {
-    console.log(pointModule);
+    
     
     //extract the parameters    
     var lat =  parseFloat(req.param("lat"));
     var lng = parseFloat(req.param("lng"));
 
-    var point = pointModule.createPoint(lat,lng);
+    var point = new Point(app, lat, lng);
     
-    var err = function(errString) {
+    var onError = function(errString) {
       console.log(errString);
+      res.send(errString);
+      
     };
     
-    point.reverseGeocode(err, function() {});
+    var onSuccess = function(data) {
+      console.log(data);
+      res.send(data);
+    }
+    
+    point.reverseGeocode(onError, onSuccess);
+    
+    
+    
+  };
+  
+  /*
+   * GET: /search/location
+   * 
+   * This allows the user to get a list of locations which are around the location 
+   */
+  var searchLocation = function(req, res) {
+    
+    //extract the parameters    
+    var searchString = parseFloat(req.param("s"));
+    var lat =  parseFloat(req.param("lat"));
+    var lng = parseFloat(req.param("lng"));
+
+    if (lat && lng) {
+      var point = Point.createPoint(app, lat, lng);
+    }
+    
+    app.geocode.find(filter, function(err, cursor) {
+      if (err) { console.log(err);}
+      
+      cursor.toArray(function(err, items) {          
+        //callback when we get the items.  Just return them as json.
+        console.log(items);
+        res.send(items);            
+      });
+        
+    });
+    
     
   };
   
   
-
+/*
+ * ROUTE DEFINITIONS
+ */
   app.get('/search/event', searchEvent);
+  app.get('/search/location', searchLocation);
 
 };

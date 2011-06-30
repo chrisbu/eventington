@@ -7,6 +7,7 @@ var express = require('express');  //express middleware library
 var Db = require('mongodb').Db; //mongodb database
 var Server = require('mongodb').Server; //mongodb Server
 var everyauth = require('everyauth');
+var util = require('util');
 
 /* Everyauth configuration */
 everyauth.password
@@ -87,6 +88,10 @@ require("./routes/search")(app);
 if (!module.parent) {
   //open the database - can't do anything if this isn't working
   db.open(function(err,db) {
+    util.log("Opened database");    
+    if (db == null) {
+      throw new Error("Mongo db is probably not started.");
+    }
     app.db = db;
     
     /*
@@ -94,16 +99,29 @@ if (!module.parent) {
      */
     var startApp = function() {
       app.listen(3005);    
-      console.log("DB Opened and Express server listening on port %d", app.address().port);  
+      //util.log("Loaded geocodeCollection index");
+      util.log("DB Opened and Express server listening on port " +  app.address().port);  
     };
+    
+    var onLocationCollection = function(err, collection) {
+      if (err) { console.log(err); }
+      
+      util.log("Loaded location collection");
+      
+      app.locations = collection;
+      startApp();
+    } 
     
     /*
      * When we have the date index created, start the App Listening
      */
     var onEnsureDateIndex = function(err, indexName) {
       if (err) { console.log(err); }
-      console.log(indexName);
-      startApp();
+      util.log("Loaded events.date index");
+      
+      //now load the locations collection
+      app.db.collection('locations', onLocationCollection);
+      
     };
     
     /*
@@ -111,7 +129,7 @@ if (!module.parent) {
      */
     var onEnsureLocationIndex = function(err, indexName) {
       if (err) { console.log(err); }
-      console.log(indexName);
+      util.log("Loaded events.location index");
       app.events.ensureIndex({date: 1}, onEnsureDateIndex);        
     };
     
@@ -119,9 +137,12 @@ if (!module.parent) {
      * When we have the events collection, create the location index.
      */
     var onGetEvents = function(err, collection) {
+      if (err) { console.log(err); }
+      util.log("Loaded events collection");
       app.events = collection;
       app.events.ensureIndex({loc: "2d"}, onEnsureLocationIndex);
     };
+    
     
     /*
      * Open the collection and start the chain of events.

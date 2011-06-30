@@ -1,48 +1,64 @@
 /*
  * Point.js - provides a class which can lookup from geolocation cache in mongodb. 
  */
-
-module.exports = function(app) {
-
-  var geocodeCollection = app.geocodeCollection;
+var Point =  function(app, lat, lng) {
   
+  this.latitude = lat;
+  this.longitude = lng;
+  this.locations = app.locations; //set the locations collection
   
-
-  /*
-   * Point class which which can be instantiated.
-   */
-  var Point = function() {
-    this.latitude = 0;
-    this.longitude = 0;    
-  }
-  
-  /*
-   * Function to convert the latitude to a name, based upon what we already have cached.  
-   * @param err
-   *  - Callback which looks like function(errorString) {} 
-   *    If the item doesn't appear in the cache, or there is some other error, then we can't reverse geocode
-   * @param success
-   *  - Callback which looks like function(locationName) {}
-   */
-  Point.prototype.reverseGeocode = function(err, success) {
-    //TODO: server side reverse geocode
-    err("Not Implemented");
-  };
-  
-  
-  /*
-   * Constructor
-   * @param lat
-   *  - latitude
-   * @param lng
-   *  - longitude
-   */
-  var createPoint = function(lat, lng) {
-    var result = new Point();
-    result.latitude = lat;
-    result.longitude = lng;
-    return result;
-  }
-
-
 };
+
+
+/*
+ * Return a location array for the latitude and longitude
+ */
+Point.prototype.getLocation = function() {
+  var location = [this.latitude, this.longitude];
+  return location;  
+};
+
+/*
+ * Reverse geocode for the point at this location.
+ * 
+ * 
+ * @param onSuccess
+ *  - calls onSuccess(locationName) if the name exists in the local cache
+ * 
+ * @param onError
+ *  - calls onError(errorMessage) if the name doesn't exist in the local cache. 
+ *  
+ * 
+ * 
+ */
+Point.prototype.reverseGeocode = function(onError, onSuccess) {
+  //DONE: server side reverse geocode
+  
+  
+  var locationFilter = {$near: this.getLocation(), $maxDistance: 1};
+
+  this.locations.find(locationFilter, function(err, cursor) {
+      if (err) { console.log(err);}
+      
+      cursor.toArray(function(err, items) {      
+        if (err) {
+          onError(err);          
+        } 
+        else if (items === null || items.length > 0) {
+          //no data returned
+          onError("no data returned");
+        }    
+        else {
+          //success
+          //callback when we get the items.  Just return them as json.          
+          onSuccess(items);
+        }
+        
+      });
+        
+    });
+};
+
+
+
+module.exports.Point = Point;
