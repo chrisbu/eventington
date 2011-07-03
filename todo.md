@@ -7,25 +7,24 @@ Required Functionality
   1. enter town or postcode
   2. check client side cache for lat lng
   3. check server for lat lng
-    - GET: /geo/code?name=xxx
+    - GET: /geo?name=xxx
   4. check google for lat lng
     1. cache google result client side
     2. cache google result server side
-      - POST: /geo/code
+      - POST: /geo
         - json data: {name: XXX, lat: nn.nnn, lng: mm.mmm}
   5. Have lat lng for the entered location string.
 - reverse geocode - Convert a lat / lng into a name
-  1. convert lat lng to geohash
-  2. check client side cache for geohash
-  3. check server side cache for geohash
-    - GET: /geo/rev?hash=XXX
-  4. check google for lat + lng
-    1. cache google result for lat lng converted to geohash
+  1. check client side cache for lat lng
+  2. check server side cache for lat lng
+    - GET: /geo?lat=xx.xxx&lng=yy.yyy
+  3. check google for lat + lng
+    1. cache google result for lat lng 
       1. in local client
       2. on server
-        - POST: /geo/rev
-          - json data: {hash: XXX, name: YYY}
-  5. Have name which represents lat lng + geohash.  
+        - POST: /geo
+          - json data: {name: XXX, lat: nn.nnn, lng: mm.mmm}
+  4. Have name which represents lat lng.  
 - geolocate - Automatically determine whereabouts the browser is using browser api's.
   1. use modernizr if available
     1. use reverse geocode to get name for lat lng
@@ -59,8 +58,8 @@ Required Functionality
 - add events
   1. allow adding events anonymously.
     1. save event with following data
-      POST: /events
-        json data: {date: "2011-01-23", time: "22:13:05", qloc: "Chris's House", loc: "123 The Street, Someplace, Some County, ABC123, UK", lat: "12.345", lng: "23.456", "Party at chris's house", dur: "06:00:00" }   
+      POST: /event
+        - json data: {date: "2011-01-23", time: "22:13:05", qloc: "Chris's House", loc: "123 The Street, Someplace, Some County, ABC123, UK", lat: "12.345", lng: "23.456", "Party at chris's house", dur: "06:00:00" }   
       - date
       - time
       - duration
