@@ -33,8 +33,9 @@ everyauth.password
 
 /* Create the server */
 var app = module.exports = express.createServer(	
-  express.methodOverride(),
   express.cookieParser(),
+  express.methodOverride(),
+  express.bodyParser(),
   express.session({ secret: "fkgjhek vk4r34SR$Fsc" }),
   everyauth.middleware()
 ); //create the http server for this application
@@ -42,6 +43,7 @@ var app = module.exports = express.createServer(
 
 // Server Configuration
 app.configure(function(){
+  
   //view engine is ejs
   app.set('views', __dirname + '/views');  
   app.set('view engine', 'ejs');
@@ -51,6 +53,8 @@ app.configure(function(){
   
   //add a logging framework
   app.use(express.logger());
+  
+
   
   //specify the static route.
   app.use(express.static(__dirname + '/public'));
@@ -79,9 +83,11 @@ var db = new Db('eventington', new Server("127.0.0.1", 27017, {}), {native_parse
 
 
 // Routes
+require("./routes/home")(app);
 require("./routes/geo")(app);
 require("./routes/search")(app);
 require("./routes/event")(app);
+/*require("./routes/event")(app);*/
 
 
 
@@ -94,6 +100,8 @@ if (!module.parent) {
       throw new Error("Mongo db is probably not started.");
     }
     app.db = db;
+    
+    
     
     /*
      * Function to start listening
