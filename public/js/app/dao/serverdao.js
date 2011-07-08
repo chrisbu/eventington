@@ -39,7 +39,7 @@
   /*
    * Create the dao namespace within eventington.
    */
-  (function(dao, $, undefined) {
+  (function(serverdao, $, undefined) {
     
     /*
      * Looks up to the server to convert a name into a single unique lat lng values.
@@ -59,7 +59,7 @@
      * @param name
      *   The name to get the best matching coordinate for.
      */
-    dao.getCoordFromName = function(err, success, name) {
+    serverdao.getCoordFromName = function(err, success, name) {
       
       //use jquery to perform the get.
       var url = "/geo";
@@ -117,7 +117,7 @@
      *   Longitude value
      *  
      */
-    dao.getNameFromCoord = function(err, success, lat, lng) {
+    serverdao.getNameFromCoord = function(err, success, lat, lng) {
       //use jquery to perform the get.
       var url = "/geo";
       var data = {"lat": lat, "lng" : lng};
@@ -169,7 +169,7 @@
      * @param location
      *   location object in the form of json: {name, lat, lng}
      */
-    dao.saveLocation = function(err, success, location) {
+    serverdao.saveLocation = function(err, success, location) {
       
       //use jquery to perform the get.
       var url = "/geo";
@@ -220,7 +220,7 @@
      *   The location string to serach for.
      *  
      */
-    dao.searchLocation = function(err, success, locationString) {
+    serverdao.searchLocation = function(err, success, locationString) {
       //use jquery to perform the get.
       var url = "/search/loc";
       var data = {"locName": locationString};
@@ -264,7 +264,7 @@
      *   [optional] end date to search on.  If not supplied, then searces for events only on the start date, otherwise
      *    searches for events within in an inclusive date range.
      */
-    dao.searchEvents = function(err, success, location, startDate, endDate) {
+    serverdao.searchEvents = function(err, success, location, startDate, endDate) {
       var url = "/search";
       
       var data = {};
@@ -324,7 +324,7 @@
      * } 
      *   
      */
-    dao.saveEvent = function(err, success, eventRecord) {
+    serverdao.saveEvent = function(err, success, eventRecord) {
       
       //use jquery to perform the get.
       var url = "/event";
@@ -356,7 +356,7 @@
     };
     
     
-  }(eventington.dao = eventington.dao || {}, $)); //self executing anonymous functon to create the namespace methods
+  }(eventington.serverdao = eventington.serverdao || {}, $)); //self executing anonymous functon to create the namespace methods
   
 }(window.eventington = window.eventington || {}, jQuery)); //self executing anonymous functon to create the namespace methods
 
