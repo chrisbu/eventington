@@ -25,7 +25,7 @@
         err(data);  
       };
       
-      var onSuccess = functcion(data) {
+      var onSuccess = function(data) {
         success(data);
       };
       

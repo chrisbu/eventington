@@ -6,6 +6,7 @@
  * 
  *  - getNameFromCoord
  *  - getCoordFromName
+ *  - getLocationFromBrowser
  */
 
 /*
@@ -45,7 +46,7 @@
 
       //setup callback functions for success and error.
       var addToLocalCache = function(location) {
-        browserdao.addLocationForCoord(location);        
+        browserdao.addLocation(location);        
       };
       
       var addToServerCache = function(location) {
@@ -58,7 +59,12 @@
       };
       
       var onGoogleSuccess = function(location) {
+        //hoorah - we got a location back from google.
+        //save it locally and on the server
+        addToServerCache(location);
+        addTolocalCache(location);
         
+        success(location); //call back to the success to exit.
       };
       
       var onServerError = function(error) {
@@ -112,6 +118,11 @@
      */
     geoservice.getCoordFromName = function(err, success, name) {
       err("Not implemented");
+    };
+    
+    
+    geoservice.getLocationFromBrowser = function(err, success) {
+      err("Not Implemented");
     };
     
   }(eventington.geoservice = eventington.geoservice || {}, $)); //self executing anonymous functon to create the namespace methods

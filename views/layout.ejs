@@ -49,7 +49,9 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
-   
+  <div id="error" style="display:none; width:100%; height:20px; background-color: red; color: yellow; text-align: center; padding: 5px;">
+    
+  </div>
 
   <div id="container">
     <header>
@@ -94,7 +96,13 @@
   <script src="js/plugins.js?v=1"></script>
   <!--<script src="js/script.js?v=1"></script>-->
   <!--<script src="js/geocode.js?v=1"></script>-->
-  <script src="js/app/serverdao.js?v=1"></script>
+  <script src="js/app/dao/serverdao.js?v=1"></script>
+  <script src="js/app/dao/googledao.js?v=1"></script>
+  <script src="js/app/dao/browserdao.js?v=1"></script>
+  <script src="js/app/model/location.js?v=1"></script>
+  <script src="js/app/service/geoservice.js?v=1"></script>
+  <script src="js/app/service/lookupservice.js?v=1"></script>
+  <script src="js/app/ui/errorhandler.js?v=1"></script>
 
   <!--[if lt IE 7 ]>
     <script src="js/dd_belatedpng.js?v=1"></script>

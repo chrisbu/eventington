@@ -27,7 +27,7 @@
      * Adds a location to the client side local storage (if available).
      * 
      */
-    browserdao.addLocationForCoord = function(location) {
+    browserdao.addLocation = function(location) {
       //TODO: Add to local cache
     };
     

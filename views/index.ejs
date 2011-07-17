@@ -1,5 +1,5 @@
-<script src="js/search.js?v=1"></script>
-<script src="js/save.js?v=1"></script>
+<!--<script src="js/search.js?v=1"></script>
+<script src="js/save.js?v=1"></script>-->
 
 <div id="title" style="visibility: hidden">
   <div>
@@ -12,7 +12,16 @@
 <div class="search" />
 
   <div id="where"/>
-    <button onclick="getBrowserLocation();">Determine my location</button>    
+    <button onclick="eventington.geoservice.getLocationFromBrowser(
+        function(data) {
+          console.log('onError');
+          eventington.ui.showError(data);
+          $('#loc').val(data);
+        },
+        function(data) {
+          console.log('onSuccess');         
+        }
+      );">Determine my location</button>    
     <input type="textbox" id="loc" title="Where" />
   </div>
 
