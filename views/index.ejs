@@ -16,10 +16,10 @@
         function(data) {
           console.log('onError');
           eventington.ui.showError(data);
-          $('#loc').val(data);
         },
         function(data) {
-          console.log('onSuccess');         
+          console.log('onSuccess');
+          $('#loc').val(data.name);         
         }
       );">Determine my location</button>    
     <input type="textbox" id="loc" title="Where" />

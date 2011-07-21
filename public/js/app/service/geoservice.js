@@ -46,11 +46,11 @@
 
       //setup callback functions for success and error.
       var addToLocalCache = function(location) {
-        browserdao.addLocation(location);        
+        eventington.browserdao.addLocation(location);        
       };
       
       var addToServerCache = function(location) {
-        serverdao.saveLocation(function() {}, function() {}, location);
+        eventington.serverdao.saveLocation(function() {}, function() {}, location);
       };
       
       var onGoogleError = function(error) {
@@ -120,9 +120,46 @@
       err("Not implemented");
     };
     
-    
+    /*
+     * Tries to use browser geolocation to get the current location from the browser.
+     * 
+     * @param err
+     *   - error callback
+     * 
+     * @param success
+     *   - success callback - passing in a location object.
+     */
     geoservice.getLocationFromBrowser = function(err, success) {
-      err("Not Implemented");
+      
+      if (Modernizr.geolocation) {
+        //they have geolocation enabled.
+        
+        
+        var options = {
+          maximumAge: 120000,  //two mins old is ok.
+          enableHighAccuracy: false //don't need to be highly accurate - we're searching for miles around, not streets away.
+        };
+        
+        //on error function
+        var onError = function(error) {
+          eventington.ui.showError(error);
+        };
+        
+        var onSuccess = function(position) {
+          eventington.geoservice.getNameFromCoord(
+                  onError, 
+                  function(location) {
+                    //callback passed into the original method
+                    success(location);
+                  },
+                  position.coords.latitude, 
+                  position.coords.longitude
+          );
+        };
+        
+        //do the geolocation lookup using html5 browser api.
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, options);    
+      }
     };
     
   }(eventington.geoservice = eventington.geoservice || {}, $)); //self executing anonymous functon to create the namespace methods
