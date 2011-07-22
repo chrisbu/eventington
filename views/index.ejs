@@ -1,5 +1,4 @@
-<!--<script src="js/search.js?v=1"></script>
-<script src="js/save.js?v=1"></script>-->
+
 
 <div id="title" style="visibility: hidden">
   <div>
@@ -19,25 +18,29 @@
         },
         function(data) {
           console.log('onSuccess');
-          $('#loc').val(data.name);         
+          $('#locationTextbox').val(data.name);         
         }
       );">Determine my location</button>    
-    <input type="textbox" id="loc" title="Where" />
+    <input type="textbox" id="locationTextbox" title="Where" />
   </div>
 
 
   <div id="when" />
-    <input type="textbox" id="dat" title="When" />
+    <input type="textbox" id="dateTextbox" title="When" />
     <button>Today</button><button>Tomorrow</button>    
   </div>
 
   <div id="search" />
     <script>
-      eventSearch = function() {
-        var location = $('#loc').val();
-        var date = $('#dat').val();
-
-        doSearch(location, date);
+      var eventSearch = function() {
+        var startDate = $('#dateTextbox').val();
+		
+		var location = eventington.model.createLocation();
+		location.lat = "51";
+		location.lng = "0.5";
+		location.name = $("#locationTextbox").val();
+		
+        eventington.searchservice.searchEvents(eventington.ui.showError, eventington.ui.showEvents, startDate);
       };
     </script>
 
