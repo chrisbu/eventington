@@ -319,7 +319,7 @@
      *   date: "2011-01-23", 
      *   time: "22:13:05", 
      *   location: {name: "123 The Street, Someplace, Some County, ABC123, UK", lat: "12.345", lng: "23.456"}, 
-     *   shortDesc: "Party at chris's house", 
+     *   title: "Party at chris's house", 
      *   durMins: 180 
      * } 
      *   
