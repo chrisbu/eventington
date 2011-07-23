@@ -4,9 +4,28 @@
 
 module.exports = function(app) {
 
+  /*
+   * Allows saving events into the database.
+   */
   var saveEvent = function(req, res) {
     console.log("routes/event.js in saveEvent");
     console.log(req.body);
+    
+    var postData = req.body;
+    
+    var eventRecord = {
+      loc: {
+        long: parseFloat(postData.location.lng),
+        lat: parseFloat(postData.location.lat)
+      },
+      title: postData.title,
+      date: postData.date,
+      time: postData.time
+    };
+    
+    
+    app.events.insert(eventRecord);
+    
     res.send(true);    
   };
   
