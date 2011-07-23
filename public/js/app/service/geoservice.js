@@ -43,22 +43,28 @@
      *  - longitude value
      */
     geoservice.getNameFromCoord = function(err, success, lat, lng) {
+      log("geoservice.getNameFromCoord")
+
 
       //setup callback functions for success and error.
       var addToLocalCache = function(location) {
+        log("geoservice.getNameFromCoord.addToLocalCache");
         eventington.browserdao.addLocation(location);        
       };
       
       var addToServerCache = function(location) {
+        log("geoservice.getNameFromCoord.addToServerCache");
         eventington.serverdao.saveLocation(function() {}, function() {}, location);
       };
       
       var onGoogleError = function(error) {
+        log("geoservice.getNameFromCoord.onGoogleError");
         //Aargh! we can't get any location for this coordinate, so raise the error back to the caller.
         err(error);        
       };
       
       var onGoogleSuccess = function(location) {
+        log("geoservice.getNameFromCoord.onGoogleSuccess");
         //hoorah - we got a location back from google.
         //save it locally and on the server
         addToServerCache(location);
@@ -68,11 +74,14 @@
       };
       
       var onServerError = function(error) {
+        log("geoservice.getNameFromCoord.onServerError");
         //we didn't have the data on the server, so call google.
         eventington.googledao.getNameFromCoord(onGoogleError, onGoogleSuccess, lat, lng);
       };
       
       var onServerSuccess = function(location) {
+        log("geoservice.getNameFromCoord.onServerSuccess");
+        
         //store in the local cache
         addToLocalCache(location);
         
@@ -81,11 +90,13 @@
       };
       
       var onLocalCacheError = function(error) {
+        log("geoservice.getNameFromCoord.onLocalCacheError");
         //if we can't lookup from the local cache, or get no data, then try looking up from the server.
         eventington.serverdao.getNameFromCoord(onServerError, onServerSuccess, lat, lng);
       };
       
       var onLocalCacheSuccess = function(location) {
+        log("geoservice.getNameFromCoord.onLocalCacheSuccess");
         success(location); // fine, exit.
       };
       
@@ -105,7 +116,7 @@
      * - look on server
      * - look on google
      * 
-     * The result will the go back up the tree, caching as required
+     * The result will then go back up the tree, caching as required
      * so if found on google, it will be cached on the server and in the local browser,
      * if found on the server, it will be cached in the localbrowser.
      * 
@@ -117,7 +128,7 @@
      *  - name to try and convert to lat/lng value. 
      */
     geoservice.getCoordFromName = function(err, success, name) {
-      err("Not implemented");
+      err("Not implemented: geoservice.getCoordFromName");
     };
     
     /*
@@ -130,7 +141,7 @@
      *   - success callback - passing in a location object.
      */
     geoservice.getLocationFromBrowser = function(err, success) {
-      
+      log("geoservice.getLocationFromBrowser");
       if (Modernizr.geolocation) {
         //they have geolocation enabled.
         

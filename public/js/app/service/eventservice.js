@@ -3,7 +3,7 @@
   /*
    * Create the service namespace within eventington.
    */
-  (function(eventserice, $, undefined) {
+  (function(eventservice, $, undefined) {
     
     /*
      * Converts a location, eventTitle, eventDate into an event model object, converting the location name into 
@@ -13,18 +13,42 @@
      * @param eventTitle
      * @param eventDate
      */
-    eventservice.saveEvent = function(locationName, eventTitle, eventDate) {
+    eventservice.saveEvent = function(err, success, locationName, eventTitle, eventDate) {
       
-      var onError = function(data) {
-        eventington.ui.showError(data);  
+      var onGeocodeError = function(data) {
+        eventington.ui.showError(data);
+        err();
       };
       
-      var onSuccess = function(data) {
-        eventington.ui.showError("Not implemented");
+      /*
+       * If we manage to convert the name into a lat + lng, then we can save the record.
+       */
+      var onGeocodeSuccess = function(location) {
+        var newEvent = eventington.model.createEvent();
+        newEvent.location = location;
+        newEvent.date = eventDate;
+        newEvent.time = "";
+        newEvent.title = eventTitle;
+        
+        var onSaveError = function(data) {
+          eventington.ui.showError(data);
+          err();
+        };
+        
+        var onSaveSuccess = function(data) {
+          if (data != "OK") {
+            onSaveError("There was an error adding your event");
+          }
+          else {
+            success();
+          }
+        };
+        
+        //now save the event.
+        eventington.serverdao.saveEvent()
       };
       
-      eventington.serverdao.saveEvent
-      
+      eventington.geoservice.getCoordFromName(onGeocodeError, onGeocodeSuccess, locationName);
       
       
     };

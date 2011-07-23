@@ -13,14 +13,14 @@
      * lookup in browser local storage for matching name from coordinate. 
      */
     browserdao.getNameFromCoord = function(err, success, lat, lng) {
-      err("Not implemented");
+      err("Not implemented: browserdao.getNameFromCoord");
     };
     
     /*
      * lookup in browser local storage for matching coordinages from a name.
      */
     browserdao.getCoordFromName = function(err, success, name) {
-      err("Not implemented");
+      err("Not implemented: browserdao.getCoordFromName");
     };
     
     /*
@@ -29,6 +29,7 @@
      */
     browserdao.addLocation = function(location) {
       //TODO: Add to local cache
+      
     };
     
     

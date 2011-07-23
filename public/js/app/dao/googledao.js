@@ -17,13 +17,13 @@
     googledao.getNameFromCoord = function(err, success, lat, lng) {
       //TODO: - google api - get name from coordinate (geocode)
       
-      err("Not Implemented");
+      err("Not Implemented: googledao.getNameFromCoord");
     };
     
     googledao.getCoordFromName = function(err, success, name) {
       //TODO: - google api - get coordinate from name (reverse geocode)
       
-      err("Not Implemented");
+      err("Not Implemented: googledao.getCoordFromName");
     };
     
     

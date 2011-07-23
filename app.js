@@ -6,29 +6,29 @@
 var express = require('express');  //express middleware library
 var Db = require('mongodb').Db; //mongodb database
 var Server = require('mongodb').Server; //mongodb Server
-var everyauth = require('everyauth');
+// var everyauth = require('everyauth');
 var util = require('util');
 
 /* Everyauth configuration */
-everyauth.password
-	.getLoginPath("/login")
-	.postLoginPath("/login")
-	.loginView("login.ejs")
-	.authenticate( function(login, password) {
-		//TODO
-		return ['Login Failed'];
-	})
-	.loginSuccessRedirect("/")
-	.getRegisterPath("/register")
-	.postRegisterPath("/register")
-	.registerView("register.ejs")
-	.validateRegistration( function(newUserAttributes) {
-		//TODO
-	})
-	.registerUser( function(newUserAttributes) {
-		//TODO
-	})
-	.registerSuccessRedirect("/");
+// everyauth.password
+	// .getLoginPath("/login")
+	// .postLoginPath("/login")
+	// .loginView("login.ejs")
+	// .authenticate( function(login, password) {
+		// //TODO
+		// return ['Login Failed'];
+	// })
+	// .loginSuccessRedirect("/")
+	// .getRegisterPath("/register")
+	// .postRegisterPath("/register")
+	// .registerView("register.ejs")
+	// .validateRegistration( function(newUserAttributes) {
+		// //TODO
+	// })
+	// .registerUser( function(newUserAttributes) {
+		// //TODO
+	// })
+	// .registerSuccessRedirect("/");
 
 
 /* Create the server */
@@ -36,8 +36,8 @@ var app = module.exports = express.createServer(
   express.cookieParser(),
   express.methodOverride(),
   express.bodyParser(),
-  express.session({ secret: "fkgjhek vk4r34SR$Fsc" }),
-  everyauth.middleware()
+  express.session({ secret: "fkgjhek vk4r34SR$Fsc" })
+  // everyauth.middleware()
 ); //create the http server for this application
 
 
@@ -76,11 +76,11 @@ app.configure('production', function(){
 
 
 //Everyauth configuration
-everyauth.helpExpress(app);
+//everyauth.helpExpress(app);
 
 
 //DB Connection on localhost
-var db = new Db('eventington', new Server("127.0.0.1", 27017, {}), {native_parser:true});
+var db = new Db('eventington', new Server("127.0.0.1", 27017, {}), {native_parser:false});
 
 
 // Routes

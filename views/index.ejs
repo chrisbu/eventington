@@ -13,14 +13,14 @@
   <div id="where"/>
     <button onclick="eventington.geoservice.getLocationFromBrowser(
         function(data) {
-          console.log('onError');
+          log('button.onclick onError');
           eventington.ui.showError(data);
         },
         function(data) {
-          console.log('onSuccess');
+          log('button.onclick onSuccess');
           $('#locationTextbox').val(data.name);         
         }
-      );">Determine my location</button>    
+      );">Detect my location</button>    
     <input type="textbox" id="locationTextbox" title="Where" />
   </div>
 
@@ -35,10 +35,10 @@
       var eventSearch = function() {
         var startDate = $('#dateTextbox').val();
 		
-		var location = eventington.model.createLocation();
-		location.lat = "51";
-		location.lng = "0.5";
-		location.name = $("#locationTextbox").val();
+    		var location = eventington.model.createLocation();
+    		location.lat = "51";
+    		location.lng = "0.5";
+    		location.name = $("#locationTextbox").val();
 		
         eventington.searchservice.searchEvents(eventington.ui.showError, eventington.ui.showEvents, startDate);
       };
@@ -54,8 +54,24 @@
 <div id="add-event-form">
 	<label for="addEvent">What</label><input id="addEvent" type="text" /><br />
 	<label for="addlocation">Where</label><input id="addLocation" type="text" /><br />
-	<label for="addDate">When</label><input type="text" name="addDate" id="addDate" /><br />
-	<input type="button" value="Add" onclick="saveEvent($('#addLocation').val(), $('#addEvent').val(), $('#addDate').val());"/>
+	<label for="addDate">When</label><input type="text" name="addDate" id="addDate" /><br />	
+	<input type="button" value="Add" onclick="eventington.eventservice.saveEvent(
+	   function() {
+	     //on error
+	     $('#add-event-form').slideUp();
+	   },
+  	 function() {
+  	   //on success
+  	   $('#add-event-form').slideUp();
+  	   //clear the entered values
+  	   $('#addLocation').val(''); 
+       $('#addEvent').val(''); 
+       $('#addDate').val('');
+  	 }, 
+  	 $('#addLocation').val(), 
+  	 $('#addEvent').val(), 
+  	 $('#addDate').val()
+	 );"/>
 </div>
 
 
