@@ -29,10 +29,21 @@
       
       var onGoogleApiResult = function(results, status) {
         log("googledao.getNameFromCoord.onGoogleApiResult");
+        log(results);
+        log(status);
         if (status == google.maps.GeocoderStatus.OK) {
-          log(results);
+          
           var location = eventington.model.createLocation();
-          location.name = results[1].formatted_address;
+          if (results.length > 1) {
+            location.name = results[1].formatted_address;
+          }
+          else if (results.length > 0) {
+              location.name = results[0].formatted_address;
+          }
+          else {
+            //no results, so raise an error
+            err("No results retuned");
+          }
           location.lat = lat;
           location.lng = lng;
           
@@ -40,8 +51,6 @@
           
         }
         else {
-          log(results);
-          log(status);
           err("Error in geocode.getNameFromCoord");
         }
       };
@@ -68,8 +77,8 @@
           log(results);
           var location = eventington.model.createLocation();
           location.name = locationName;
-          location.lat = results[0].geometry.location.Ia;
-          location.lng = results[0].geometry.location.Ha;
+          location.lat = results[0].geometry.location.lat();
+          location.lng = results[0].geometry.location.lng();
           
           success(location);
         }

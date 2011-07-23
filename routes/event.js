@@ -15,16 +15,22 @@ module.exports = function(app) {
     
     var eventRecord = {
       loc: {
-        long: parseFloat(postData.location.lng),
-        lat: parseFloat(postData.location.lat)
+        "long": parseFloat(postData.location.lng),
+        "lat": parseFloat(postData.location.lat)
       },
       title: postData.title,
       date: postData.date,
       time: postData.time
     };
     
+    console.log("Saving event record:");
+    console.log(eventRecord);
     
-    app.events.insert(eventRecord);
+    
+    
+    app.events.insert(eventRecord, function(err) {
+      if (err) { console.log(err); }
+    });
     
     res.send(true);    
   };

@@ -154,7 +154,7 @@
         //save it locally and on the server
         addToServerCache(location);
         addToLocalCache(location);
-        
+                
         success(location); //call back to the success to exit.
       };
       

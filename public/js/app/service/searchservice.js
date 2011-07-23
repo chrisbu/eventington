@@ -30,6 +30,8 @@
     };
     
     searchservice.searchEvents = function(err, success, location, startDate, endDate) {
+    	log("in searchService.searchEvents");
+    	log(location);
     	
     	var onError = function(data) {
     		err(data);

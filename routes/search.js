@@ -11,6 +11,7 @@ module.exports = function(app) {
   var searchEvent = function(req,res) {
     console.log("routes/search.js in searchEvent");
     
+    console.log(req.param);
     var lat =  parseFloat(req.param("lat"));
     var lng = parseFloat(req.param("lng"));
     
@@ -20,6 +21,8 @@ module.exports = function(app) {
     
     
     var filter = {"loc" : locationFilter};
+    
+    filter = {}; //TODO: Remove the location filter.
     
     app.events.find(filter, function(err, cursor) {
       if (err) { console.log(err); }

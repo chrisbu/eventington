@@ -50,6 +50,8 @@
         };
         
         //now save the event.
+        log("Saving event");
+        log(newEvent);
         eventington.serverdao.saveEvent(onSaveError, onSaveSuccess, newEvent);
       };
       
