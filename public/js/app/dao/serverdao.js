@@ -267,13 +267,13 @@
     serverdao.searchEvents = function(err, success, location, startDate, endDate) {
       var url = "/search";
       
-      var data = {};
-      data.lat = location.lat;
-      data.lng = location.lng;
-      data.s = startDate;
+      var searchCriteria = {};
+      searchCriteria.lat = location.lat;
+      searchCriteria.lng = location.lng;
+      searchCriteria.s = startDate;
       if (endDate !== undefined) {
         //optional parameter.
-        criteria.e = endDate;
+        searchCriteria.e = endDate;
       }
       
       
@@ -294,7 +294,7 @@
       // perform the server call.
       $.get(
         url,
-        data,
+        searchCriteria,
         onSuccess        
       ).error(onError);
       
@@ -325,6 +325,7 @@
      *   
      */
     serverdao.saveEvent = function(err, success, eventRecord) {
+      log("serverdao.saveEvent");
       
       //use jquery to perform the get.
       var url = "/event";

@@ -68,7 +68,7 @@
         //hoorah - we got a location back from google.
         //save it locally and on the server
         addToServerCache(location);
-        addTolocalCache(location);
+        addToLocalCache(location);
         
         success(location); //call back to the success to exit.
       };
@@ -124,11 +124,70 @@
      *  - error callback
      * @param success
      *  - success callback - a location object is passed in.
-     * @param name
+     * @param locationName
      *  - name to try and convert to lat/lng value. 
      */
-    geoservice.getCoordFromName = function(err, success, name) {
-      err("Not implemented: geoservice.getCoordFromName");
+    geoservice.getCoordFromName = function(err, success, locationName) {
+      log("in geoservice.getCoordFromName");
+      
+      
+      //setup callback functions for success and error.
+      var addToLocalCache = function(location) {
+        log("geoservice.getCoordFromName.addToLocalCache");
+        eventington.browserdao.addLocation(location);        
+      };
+      
+      var addToServerCache = function(location) {
+        log("geoservice.getCoordFromName.addToServerCache");
+        eventington.serverdao.saveLocation(function() {}, function() {}, location);
+      };
+      
+      var onGoogleError = function(error) {
+        log("geoservice.getCoordFromName.onGoogleError");
+        //Aargh! we can't get any location for this coordinate, so raise the error back to the caller.
+        err(error);        
+      };
+      
+      var onGoogleSuccess = function(location) {
+        log("geoservice.getCoordFromName.onGoogleSuccess");
+        //hoorah - we got a location back from google.
+        //save it locally and on the server
+        addToServerCache(location);
+        addToLocalCache(location);
+        
+        success(location); //call back to the success to exit.
+      };
+      
+      var onServerError = function(error) {
+        log("geoservice.getCoordFromName.onServerError");
+        //we didn't have the data on the server, so call google.
+        eventington.googledao.getCoordFromName(onGoogleError, onGoogleSuccess, locationName);
+      };
+      
+      var onServerSuccess = function(location) {
+        log("geoservice.getCoordFromName.onServerSuccess");
+        
+        //store in the local cache
+        addToLocalCache(location);
+        
+        //call success method to exit.
+        success(location);
+      };
+      
+      var onLocalCacheError = function(error) {
+        log("geoservice.getCoordFromName.onLocalCacheError");
+        //if we can't lookup from the local cache, or get no data, then try looking up from the server.
+        eventington.serverdao.getCoordFromName(onServerError, onServerSuccess, locationName);
+      };
+      
+      var onLocalCacheSuccess = function(location) {
+        log("geoservice.getCoordFromName.onLocalCacheSuccess");
+        success(location); // fine, exit.
+      };
+      
+      
+      //start procesing here.
+      eventington.browserdao.getCoordFromName(onLocalCacheError, onLocalCacheSuccess, locationName); 
     };
     
     /*

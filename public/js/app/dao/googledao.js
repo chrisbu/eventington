@@ -14,16 +14,75 @@
    */
   (function(googledao, $, undefined) {
     
+    /*
+     * Converts coordinates into a name.
+     * 
+     * @param err
+     * @param success
+     *  - returns location object
+     * @param lat
+     * @param lng
+     */
     googledao.getNameFromCoord = function(err, success, lat, lng) {
-      //TODO: - google api - get name from coordinate (geocode)
+      log("in googledao.getNameFromCoord");
+      var latlng = new google.maps.LatLng(lat, lng);
       
-      err("Not Implemented: googledao.getNameFromCoord");
+      var onGoogleApiResult = function(results, status) {
+        log("googledao.getNameFromCoord.onGoogleApiResult");
+        if (status == google.maps.GeocoderStatus.OK) {
+          log(results);
+          var location = eventington.model.createLocation();
+          location.name = results[1].formatted_address;
+          location.lat = lat;
+          location.lng = lng;
+          
+          success(location); 
+          
+        }
+        else {
+          log(results);
+          log(status);
+          err("Error in geocode.getNameFromCoord");
+        }
+      };
+      
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'latLng': latlng}, onGoogleApiResult);
+      
     };
     
-    googledao.getCoordFromName = function(err, success, name) {
-      //TODO: - google api - get coordinate from name (reverse geocode)
+    /*
+     * Converts a name into a coordingate.
+     *  
+     * @param err
+     * @param success
+     *  - returns location object.
+     * @param locationName
+     */
+    googledao.getCoordFromName = function(err, success, locationName) {
+      log("in googledao.getCoordFromName");
       
-      err("Not Implemented: googledao.getCoordFromName");
+      var onGoogleApiResult = function(results, status) {
+        log("in googledao.getCoordFromName.onGoogleApiResult");
+        if (status == google.maps.GeocoderStatus.OK) {
+          log(results);
+          var location = eventington.model.createLocation();
+          location.name = locationName;
+          location.lat = results[0].geometry.location.Ia;
+          location.lng = results[0].geometry.location.Ha;
+          
+          success(location);
+        }
+        else {
+          log(results);
+          log(status);
+          err("Error with google coord from name");
+        }
+        
+      };
+      
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'address': locationName}, onGoogleApiResult);
     };
     
     
