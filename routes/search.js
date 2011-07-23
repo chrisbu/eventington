@@ -22,7 +22,7 @@ module.exports = function(app) {
     
     var filter = {"loc" : locationFilter};
     
-    filter = {}; //TODO: Remove the location filter.
+    
     
     app.events.find(filter, function(err, cursor) {
       if (err) { console.log(err); }

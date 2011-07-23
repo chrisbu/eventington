@@ -15,13 +15,18 @@
         function(data) {
           log('button.onclick onError');
           eventington.ui.showError(data);
+          $('#latField').val('');
+          $('#lngField').val('');
         },
         function(data) {
           log('button.onclick onSuccess');
-          $('#locationTextbox').val(data.name);         
+          $('#locationTextbox').val(data.name);
+          $('#latField').val(data.lat);
+          $('#lngField').val(data.lng);
         }
       );">Detect my location</button>    
     <input type="textbox" id="locationTextbox" title="Where" />
+    <input type="hidden" id="latField" /><input type="hidden" id="lngField" />
   </div>
 
 
@@ -36,9 +41,9 @@
         var startDate = $('#dateTextbox').val();
 		
     		var location = eventington.model.createLocation();
-    		location.lat = "51";
-    		location.lng = "0.5";
-    		location.name = $("#locationTextbox").val();
+    		location.name = $('#locationTextbox').val();
+    		location.lat = $('#latField').val();
+        location.lng = $('#lngField').val();
 		
         eventington.searchservice.searchEvents(eventington.ui.showError, eventington.ui.showEvents, location, startDate, startDate);
       };

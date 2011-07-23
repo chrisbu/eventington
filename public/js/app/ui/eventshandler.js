@@ -3,6 +3,8 @@
     (function(ui, $, undefined) {
       
       ui.showEvents = function(events) {
+        log("in ui.ShowEvents");
+        log(events);
       	eventington.ui.showError("Not implemented: ui.showEvents")
       };
       

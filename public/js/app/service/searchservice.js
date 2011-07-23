@@ -29,6 +29,18 @@
       eventington.serverdao.searchLocation(onError, onSuccess, locationString);
     };
     
+    /*
+     * If the location hasn't been geocoded to a lat/lng, then it gets the lat lng value, 
+     * and then performs a search. 
+     * 
+     *
+     * @err
+     * @success
+     *  - event array
+     * @location
+     * @startDate
+     * @endDate
+     */
     searchservice.searchEvents = function(err, success, location, startDate, endDate) {
     	log("in searchService.searchEvents");
     	log(location);
@@ -41,7 +53,30 @@
     		success(events);
     	};
     	
-    	eventington.serverdao.searchEvents(onError, onSuccess, location, startDate, endDate);
+    	if (location.lat === "" || location.lng === "" || 
+  	     location.lat === undefined || location.lng === undefined || 
+  	     location.lat === null || location.lng === null) {
+  	       
+  	       log("searchservice.searchEvents unknown lat / lng");
+  	       //location lat / lng is not defined.
+  	       
+  	       var onGeocodeSuccess = function(geocodedLocation) {
+  	         log("in searchservice.searchEvents.onGeocodeSuccess")
+  	         location = geocodedLocation;
+  	         
+  	         eventington.serverdao.searchEvents(onError, onSuccess, geocodedLocation, startDate, endDate);
+  	       };
+  	       
+  	       //geocode
+  	       eventington.geoservice.getCoordFromName(onError, onGeocodeSuccess, location.name);
+    	  
+    	}
+    	else {
+    	  //no need to geocode, so just search.
+        eventington.serverdao.searchEvents(onError, onSuccess, location, startDate, endDate);  
+    	}
+    	
+    	
     };
     
   	
